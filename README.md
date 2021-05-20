@@ -1,6 +1,6 @@
 # aws-s3-scanner
 
-usage: netskope-scanner.py [-h] [--config FILE] [--write FILE] [--test] [--org] [--maxsize BYTES] [--minsize BYTES] [--allowext EXT [EXT ...]] [--blockext EXT [EXT ...]]
+`usage: netskope-scanner.py [-h] [--config FILE] [--write FILE] [--test] [--org] [--maxsize BYTES] [--minsize BYTES] [--allowext EXT [EXT ...]] [--blockext EXT [EXT ...]]
                            [--include ACCOUNTID [ACCOUNTID ...]] [--exclude ACCOUNTID [ACCOUNTID ...]]
 
 optional arguments:
@@ -23,3 +23,4 @@ optional arguments:
                         List of accounts included in scan
   --exclude ACCOUNTID [ACCOUNTID ...], -e ACCOUNTID [ACCOUNTID ...]
                         List of accounts excluded from scan
+`
