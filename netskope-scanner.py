@@ -44,7 +44,7 @@ def filterObjects(object_list, accountId, bucketName, filter_list):
         ### Obtain extension from the filename
         file_extension = pathlib.Path(obj['Key']).suffix.strip('.').lower()
 
-        if debug: print(str(obj['Size'])+" "+obj['Key']+" ("+file_extension+")")
+        if options.debug: oprint(str(obj['Size'])+" "+obj['Key']+" ("+file_extension+")")
 
         ### Apply filters to file and move on if file properties do not match
         if obj['Size'] > filter_list.maxsize:
@@ -117,7 +117,7 @@ def listObjectsInBucket(s3, accountId, bucketName, filter_list):
 
     ### If AWS IsTruncated is set, then there are more results to gather
     while response['IsTruncated']:
-        print(".",end='',flush=True)
+        oprint(".",end='',flush=True)
 
         ### If we are in test mode, then stop iterating further results
         if filter_list.test:
@@ -151,6 +151,8 @@ def listBuckets(s3):
 def getOptions():
 
     parser = argparse.ArgumentParser()
+    parser.add_argument("--quiet", "-q", help="Suppress all output", action='store_true', default=False, required=False)
+    parser.add_argument("--debug", "-d", help="Enable debugging mode", action='store_true', default=False, required=False)
     parser.add_argument("--config", "-c", help="Configuration JSON file with script options", metavar='FILE', type=str, required=False)
     parser.add_argument("--write", "-w", help="Output JSON file to write with results", metavar='FILE', type=str, required=False)
     parser.add_argument("--test", "-t", help="Do not iteratively scan buckets for testing", action='store_true', default=False, required=False)
@@ -175,11 +177,15 @@ def getOptions():
     return args
 
 
+def oprint(data='', **kwargs):
+
+    if not options.quiet: print(data,**kwargs)
+
+
 ### MAIN ###==============================================================
 
 if __name__ == "__main__":
 
-    debug         = False
     file_stats    = {'errors':[], 'total':{'size':0, 'files':0, 'size.ext':{}, 'files.ext':{}}, 'account':{}, 'account.bucket':{}}
     options       = getOptions()
     sts           = boto3.client('sts')
@@ -192,7 +198,7 @@ if __name__ == "__main__":
 
     accounts = listAccountsInOrg(organizations) if options.org else [{'Id':myId}]
 
-    print(options)
+    oprint(options)
 
     ### Iterate through each account (or current account if not using organizations)
     for account in accounts:
@@ -210,7 +216,7 @@ if __name__ == "__main__":
         file_stats['account'][accountId] = {'size':0, 'files':0, 'size.ext':{}, 'files.ext':{}}
         file_stats['account.bucket'][accountId] = {}
 
-        if accountId: print("Account: "+accountId)
+        oprint("Account: "+accountId)
 
         ### If accountId is our own, then we didn't (was not asked to do so) or couldn't enumerate the organizationa for assumed roles
         if accountId == myId:
@@ -242,9 +248,9 @@ if __name__ == "__main__":
             ### Reset counters for account/bucket statistics
             file_stats['account.bucket'][accountId][bucketName] = {'size':0, 'files':0, 'size.ext':{}, 'files.ext':{}}
 
-            print(' + '+bucketName+'...',end='')
+            oprint(' + '+bucketName+'...',end='')
             listObjectsInBucket(s3,accountId,bucketName,options)
-            print()
+            oprint()
 
     if options.write:
         with open(options.write,'w') as outfile:
