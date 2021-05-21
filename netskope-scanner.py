@@ -3,8 +3,8 @@ import boto3, botocore
 import sys, pathlib, argparse
 import json
 
-def listAccountsInOrg(organizations):
 
+def listAccountsInOrg(organizations):
     account_list = []
    
     ### Try to get the accounts from the organization.  If we don't have privilege, we'll have to return no accounts
@@ -38,9 +38,7 @@ def listAccountsInOrg(organizations):
 
 
 def filterObjects(object_list, accountId, bucketName, filter_list):
-
     for obj in object_list:
-
         ### Obtain extension from the filename
         file_extension = pathlib.Path(obj['Key']).suffix.strip('.').lower()
 
@@ -99,7 +97,6 @@ def filterObjects(object_list, accountId, bucketName, filter_list):
 
 
 def listObjectsInBucket(s3, accountId, bucketName, filter_list):
- 
     ### Try to list the objects in the bucket
     try:
         response = s3.list_objects_v2(Bucket=bucketName)
@@ -136,7 +133,6 @@ def listObjectsInBucket(s3, accountId, bucketName, filter_list):
 
 
 def listBuckets(s3):
-  
     ### Get buckets from account
     try:
         response = s3.list_buckets()
@@ -149,7 +145,6 @@ def listBuckets(s3):
 
 
 def getOptions():
-
     parser = argparse.ArgumentParser()
     parser.add_argument("--quiet", "-q", help="Suppress all output", action='store_true', default=False, required=False)
     parser.add_argument("--debug", "-d", help="Enable debugging mode", action='store_true', default=False, required=False)
@@ -178,7 +173,6 @@ def getOptions():
 
 
 def oprint(data='', **kwargs):
-
     if not options.quiet: print(data,**kwargs)
 
 
@@ -213,7 +207,7 @@ if __name__ == "__main__":
             continue
 
         ### Reset counters for account and initialize account/bucket statistics
-        file_stats['account'][accountId] = {'size':0, 'files':0, 'size.ext':{}, 'files.ext':{}}
+        file_stats['account'][accountId]        = {'size':0, 'files':0, 'size.ext':{}, 'files.ext':{}}
         file_stats['account.bucket'][accountId] = {}
 
         oprint("Account: "+accountId)
@@ -239,7 +233,8 @@ if __name__ == "__main__":
             credentials = assumed_role['Credentials']
 
             ### Active S3 client with credentials
-            s3 = boto3.client('s3',aws_access_key_id=credentials['AccessKeyId'],aws_secret_access_key=credentials['SecretAccessKey'],aws_session_token=credentials['SessionToken'])
+            s3 = boto3.client('s3',aws_access_key_id=credentials['AccessKeyId'],aws_secret_access_key=credentials['SecretAccessKey'],\
+                                   aws_session_token=credentials['SessionToken'])
 
         ### Iterate over each bucket in the account S3
         for bucket in listBuckets(s3):
