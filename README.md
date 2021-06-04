@@ -26,3 +26,24 @@ optional arguments:
                         List of accounts excluded from scan
 ```
 
+## Installing
+
+pip3 install -r requirements.txt
+
+This script expects that AWS credentials are accessible to the AWS boto3 python module.
+* By exporting AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY to the shell environment variables
+* By using the AWS shared credential file (~/.aws/credentials)
+* By using awscli configure and the AWS config file (~/.aws/config)
+* By using the boto.cfg file (/etc/boto.cfg, ~/.boto)
+
+## Running
+
+With no options, this script will attach to the account with supplied credentials and 
+look at every S3 bucket in the account.
+
+In order to scan an entire organization, this script must run under the master account or 
+a delegated account that can access AssumeRole for the each accounts IAM role OrganizationAccountAccessRole.
+
+## Examples
+
+There is a folder of example JSON configurations

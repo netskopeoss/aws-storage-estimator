@@ -4,10 +4,10 @@ import sys, pathlib, argparse
 import json
 
 
-def listAccountsInOrg(organizations):
+def list_accounts_in_org(organizations):
     account_list = []
    
-    ### Try to get the accounts from the organization.  If we don't have privilege, we'll have to return no accounts
+    # Try to get the accounts from the organization.  If we don't have privilege, we'll have to return no accounts
     try:
         response = organizations.list_accounts()
     except botocore.exceptions.ClientError as error:
@@ -15,18 +15,18 @@ def listAccountsInOrg(organizations):
         response = None
         pass
 
-    ### Didn't or couldn't receive accounts
+    # Didn't or couldn't receive accounts
     if not response or 'Accounts' not in response:
         return account_list
 
     for account in response['Accounts']:
         account_list.append(account)
 
-    ### If AWS NextToken is not set, then there are no further results
+    # If AWS NextToken is not set, then there are no further results
     if 'NextToken' not in response:
         return account_list
 
-    ### Keep looking for accounts while NextToken is set
+    # Keep looking for accounts while NextToken is set
     while response['NextToken']:
         next_token = response['NextToken']
         response = organizations.list_accounts(NextToken=next_token)
@@ -37,14 +37,14 @@ def listAccountsInOrg(organizations):
     return account_list
 
 
-def filterObjects(object_list, accountId, bucketName, filter_list):
+def filter_objects(object_list, account_id, bucket_name, filter_list):
     for obj in object_list:
-        ### Obtain extension from the filename
+        # Obtain extension from the filename
         file_extension = pathlib.Path(obj['Key']).suffix.strip('.').lower()
 
         if options.debug: oprint(str(obj['Size'])+" "+obj['Key']+" ("+file_extension+")")
 
-        ### Apply filters to file and move on if file properties do not match
+        # Apply filters to file and move on if file properties do not match
         if obj['Size'] > filter_list.maxsize:
             continue
         if obj['Size'] < filter_list.minsize:
@@ -54,97 +54,97 @@ def filterObjects(object_list, accountId, bucketName, filter_list):
         if filter_list.blockext and file_extension in filter_list.blockext:
             continue
 
-        ### Setup counters for overall totals
+        # Setup counters for overall totals
         if file_extension not in file_stats['total']['size.ext']:
             file_stats['total']['size.ext'][file_extension] = 0
 
         if file_extension not in file_stats['total']['files.ext']:
             file_stats['total']['files.ext'][file_extension] = 0
 
-        ### Increment overall counters
+        # Increment overall counters
         file_stats['total']['size'] += obj['Size']
         file_stats['total']['files'] += 1
         file_stats['total']['size.ext'][file_extension] += obj['Size']
         file_stats['total']['files.ext'][file_extension] += 1
 
-        ### Setup counters for per-account totals
-        if file_extension not in file_stats['account'][accountId]['size.ext']:
-            file_stats['account'][accountId]['size.ext'][file_extension] = 0
+        # Setup counters for per-account totals
+        if file_extension not in file_stats['account'][account_id]['size.ext']:
+            file_stats['account'][account_id]['size.ext'][file_extension] = 0
 
-        if file_extension not in file_stats['account'][accountId]['files.ext']:
-            file_stats['account'][accountId]['files.ext'][file_extension] = 0
+        if file_extension not in file_stats['account'][account_id]['files.ext']:
+            file_stats['account'][account_id]['files.ext'][file_extension] = 0
 
-        ### Increment per-account counters
-        file_stats['account'][accountId]['size'] += obj['Size']
-        file_stats['account'][accountId]['files'] += 1
-        file_stats['account'][accountId]['size.ext'][file_extension] += obj['Size']
-        file_stats['account'][accountId]['files.ext'][file_extension] += 1
+        # Increment per-account counters
+        file_stats['account'][account_id]['size'] += obj['Size']
+        file_stats['account'][account_id]['files'] += 1
+        file_stats['account'][account_id]['size.ext'][file_extension] += obj['Size']
+        file_stats['account'][account_id]['files.ext'][file_extension] += 1
 
-        ### Setup counters for per-account, per-bucket totals
-        if file_extension not in file_stats['account.bucket'][accountId][bucketName]['size.ext']:
-            file_stats['account.bucket'][accountId][bucketName]['size.ext'][file_extension] = 0
+        # Setup counters for per-account, per-bucket totals
+        if file_extension not in file_stats['account.bucket'][account_id][bucket_name]['size.ext']:
+            file_stats['account.bucket'][account_id][bucket_name]['size.ext'][file_extension] = 0
 
-        if file_extension not in file_stats['account.bucket'][accountId][bucketName]['files.ext']:
-            file_stats['account.bucket'][accountId][bucketName]['files.ext'][file_extension] = 0
+        if file_extension not in file_stats['account.bucket'][account_id][bucket_name]['files.ext']:
+            file_stats['account.bucket'][account_id][bucket_name]['files.ext'][file_extension] = 0
 
-        ### Increment per-account, per-bucket counters
-        file_stats['account.bucket'][accountId][bucketName]['size'] += obj['Size']
-        file_stats['account.bucket'][accountId][bucketName]['files'] += 1
-        file_stats['account.bucket'][accountId][bucketName]['size.ext'][file_extension] += obj['Size']
-        file_stats['account.bucket'][accountId][bucketName]['files.ext'][file_extension] += 1
+        # Increment per-account, per-bucket counters
+        file_stats['account.bucket'][account_id][bucket_name]['size'] += obj['Size']
+        file_stats['account.bucket'][account_id][bucket_name]['files'] += 1
+        file_stats['account.bucket'][account_id][bucket_name]['size.ext'][file_extension] += obj['Size']
+        file_stats['account.bucket'][account_id][bucket_name]['files.ext'][file_extension] += 1
 
     return
 
 
-def listObjectsInBucket(s3, accountId, bucketName, filter_list):
-    ### Try to list the objects in the bucket
+def list_objects_in_bucket(s3, account_id, bucket_name, filter_list):
+    # Try to list the objects in the bucket
     try:
-        response = s3.list_objects_v2(Bucket=bucketName)
+        response = s3.list_objects_v2(Bucket=bucket_name)
     except botocore.exceptions.ClientError as error:
-        file_stats['errors'].append("Couldn't get bucket objects for account:"+accountId+", bucket:"+bucketName+" ("+str(error)+")")
+        file_stats['errors'].append("Couldn't get bucket objects for account:"+account_id+", bucket:"+bucket_name+" ("+str(error)+")")
         response = None
         pass
 
-    ### If the bucket was empty or we couldn't list objects, then we have to return
+    # If the bucket was empty or we couldn't list objects, then we have to return
     if not response or 'Contents' not in response:
         return
 
-    ### Pass contents of the bucket to our filter to find files that match
-    filterObjects(response['Contents'],accountId,bucketName,filter_list)
+    # Pass contents of the bucket to our filter to find files that match
+    filter_objects(response['Contents'],account_id,bucket_name,filter_list)
 
-    ### If AWS IsTruncated is set, then there are more results to gather
+    # If AWS IsTruncated is set, then there are more results to gather
     while response['IsTruncated']:
         oprint(".",end='',flush=True)
 
-        ### If we are in test mode, then stop iterating further results
+        # If we are in test mode, then stop iterating further results
         if filter_list.test:
             break
 
-        ### Token used to request further results
+        # Token used to request further results
         continuation_token = response['NextContinuationToken']
 
-        ### Continue listing the bucket
-        response = s3.list_objects_v2(Bucket=bucketName,ContinuationToken=continuation_token)
+        # Continue listing the bucket
+        response = s3.list_objects_v2(Bucket=bucket_name,ContinuationToken=continuation_token)
 
-        ### Pass contents of the bucket to our filter to find files that match
-        filterObjects(response['Contents'],accountId,bucketName,filter_list)
+        # Pass contents of the bucket to our filter to find files that match
+        filter_objects(response['Contents'],account_id,bucket_name,filter_list)
 
     return
 
 
-def listBuckets(s3):
-    ### Get buckets from account
+def list_buckets(s3):
+    # Get buckets from account
     try:
         response = s3.list_buckets()
     except botocore.exceptions.ClientError as error:
-        file_stats['errors'].append("Couldn't list buckets for account:"+accountId+" ("+str(error)+")")
+        file_stats['errors'].append("Couldn't list buckets for account:"+account_id+" ("+str(error)+")")
         response = None
         pass
 
     return response['Buckets'] if 'Buckets' in response else {}
 
 
-def getOptions():
+def get_options():
     parser = argparse.ArgumentParser()
     parser.add_argument("--quiet", "-q", help="Suppress all output", action='store_true', default=False, required=False)
     parser.add_argument("--debug", "-d", help="Enable debugging mode", action='store_true', default=False, required=False)
@@ -161,7 +161,7 @@ def getOptions():
 
     args = parser.parse_args()
 
-    ### If we were provided a json config file, then start baseline arguments and override with file options
+    # If we were provided a json config file, then start baseline arguments and override with file options
     if args.config and pathlib.Path(args.config).is_file():
         with open(args.config) as f:
               json_args = json.load(f)
@@ -176,75 +176,75 @@ def oprint(data='', **kwargs):
     if not options.quiet: print(data,**kwargs)
 
 
-### MAIN ###==============================================================
+# MAIN #==============================================================
 
 if __name__ == "__main__":
 
     file_stats    = {'errors':[], 'total':{'size':0, 'files':0, 'size.ext':{}, 'files.ext':{}}, 'account':{}, 'account.bucket':{}}
-    options       = getOptions()
+    options       = get_options()
     sts           = boto3.client('sts')
     organizations = boto3.client('organizations')
     
     try:
-        myId = sts.get_caller_identity().get('Account')
+        my_id = sts.get_caller_identity().get('Account')
     except botocore.exceptions.ClientError as error:
         raise error
 
-    accounts = listAccountsInOrg(organizations) if options.org else [{'Id':myId}]
+    accounts = list_accounts_in_org(organizations) if options.org else [{'Id':my_id}]
 
     oprint(options)
 
-    ### Iterate through each account (or current account if not using organizations)
+    # Iterate through each account (or current account if not using organizations)
     for account in accounts:
-        accountId = account['Id']
+        account_id = account['Id']
 
-        ### Skip accounts that are not in the inclusion list
-        if options.include and accountId not in options.include:
+        # Skip accounts that are not in the inclusion list
+        if options.include and account_id not in options.include:
             continue
 
-        ### Skip accounts that are in the exclusion list
-        if options.exclude and accountId in options.exclude:
+        # Skip accounts that are in the exclusion list
+        if options.exclude and account_id in options.exclude:
             continue
 
-        ### Reset counters for account and initialize account/bucket statistics
-        file_stats['account'][accountId]        = {'size':0, 'files':0, 'size.ext':{}, 'files.ext':{}}
-        file_stats['account.bucket'][accountId] = {}
+        # Reset counters for account and initialize account/bucket statistics
+        file_stats['account'][account_id]        = {'size':0, 'files':0, 'size.ext':{}, 'files.ext':{}}
+        file_stats['account.bucket'][account_id] = {}
 
-        oprint("Account: "+accountId)
+        oprint("Account: "+account_id)
 
-        ### If accountId is our own, then we didn't (was not asked to do so) or couldn't enumerate the organizationa for assumed roles
-        if accountId == myId:
+        # If account_id is our own, then we didn't (was not asked to do so) or couldn't enumerate the organizationa for assumed roles
+        if account_id == my_id:
             s3 = boto3.client('s3')
         else:
             assumed_role = None
 
-            ### Attempt to assume role to obtain credentials for account requested
+            # Attempt to assume role to obtain credentials for account requested
             try:
-                assumed_role = sts.assume_role(RoleArn="arn:aws:iam::"+accountId+":role/OrganizationAccountAccessRole",RoleSessionName="NetskopeScan")
+                assumed_role = sts.assume_role(RoleArn="arn:aws:iam::"+account_id+":role/OrganizationAccountAccessRole",RoleSessionName="NetskopeScan")
             except botocore.exceptions.ClientError as error:
-                file_stats['error'].append("Couldn't assume role for account "+accountId+" ("+str(error)+")")
+                file_stats['error'].append("Couldn't assume role for account "+account_id+" ("+str(error)+")")
                 pass
 
-            ### If we didn't get an assumed role object back, move on
+            # If we didn't get an assumed role object back, move on
             if not assumed_role:
                 continue
 
-            ### Obtain the credentials from the assumed role object
+            # Obtain the credentials from the assumed role object
             credentials = assumed_role['Credentials']
 
-            ### Active S3 client with credentials
+            # Active S3 client with credentials
             s3 = boto3.client('s3',aws_access_key_id=credentials['AccessKeyId'],aws_secret_access_key=credentials['SecretAccessKey'],\
                                    aws_session_token=credentials['SessionToken'])
 
-        ### Iterate over each bucket in the account S3
-        for bucket in listBuckets(s3):
-            bucketName = bucket['Name']
+        # Iterate over each bucket in the account S3
+        for bucket in list_buckets(s3):
+            bucket_name = bucket['Name']
 
-            ### Reset counters for account/bucket statistics
-            file_stats['account.bucket'][accountId][bucketName] = {'size':0, 'files':0, 'size.ext':{}, 'files.ext':{}}
+            # Reset counters for account/bucket statistics
+            file_stats['account.bucket'][account_id][bucket_name] = {'size':0, 'files':0, 'size.ext':{}, 'files.ext':{}}
 
-            oprint(' + '+bucketName+'...',end='')
-            listObjectsInBucket(s3,accountId,bucketName,options)
+            oprint(' + '+bucket_name+'...',end='')
+            list_objects_in_bucket(s3,account_id,bucket_name,options)
             oprint()
 
     if options.write:
