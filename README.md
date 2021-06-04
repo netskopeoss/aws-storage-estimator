@@ -43,11 +43,22 @@ See https://boto3.amazonaws.com/v1/documentation/api/latest/guide/quickstart.htm
 ## Running
 
 With no options, this script will attach to the account with supplied credentials and 
-look at every S3 bucket in the account.
+look at every S3 bucket in the account.  (First time run may benefit from --test option to perform shallow 
+scans of the S3 buckets if there are a large number of them to make sure accessibility isn't an issue.) 
+
+It won't scan empty files or files bigger than 32MB by default.  The options --maxsize and --minsize will 
+change this behavior.
+
+If using --org to run for the organization, it will include all accounts in the org.  This can be
+overriden with --include or --exclude flags which take a list of account IDs each.
 
 In order to scan an entire organization, this script must run under the master account or 
 a delegated account that can access AssumeRole for the each accounts IAM role OrganizationAccountAccessRole.
 
+Output is in JSON format and sent to STDOUT by default.  To write a file use the --write /path/to/file.json option.
+
+This script will read a JSON configuration file of options, and several examples are in the config directory
+
 ## Examples
 
-There is a folder of example JSON configurations
+There is a folder called config with example JSON configurations
