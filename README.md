@@ -28,6 +28,8 @@ optional arguments:
 
 ## Installing
 
+Python3.6 or later is required
+
 pip3 install -r requirements.txt
 
 This script expects that AWS credentials are accessible to the AWS boto3 python module.
@@ -35,6 +37,8 @@ This script expects that AWS credentials are accessible to the AWS boto3 python 
 * By using the AWS shared credential file (~/.aws/credentials)
 * By using awscli configure and the AWS config file (~/.aws/config)
 * By using the boto.cfg file (/etc/boto.cfg, ~/.boto)
+
+See https://boto3.amazonaws.com/v1/documentation/api/latest/guide/quickstart.html#installation for more information.
 
 ## Running
 
