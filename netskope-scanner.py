@@ -144,6 +144,9 @@ def list_buckets(s3):
         response = None
         pass
 
+    if response is None:
+        return {}
+
     return response['Buckets'] if 'Buckets' in response else {}
 
 
