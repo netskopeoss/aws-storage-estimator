@@ -200,6 +200,8 @@ if __name__ == "__main__":
 
     oprint(options)
 
+    oprint("Accounts found: " + str(len(accounts)))
+
     # Iterate through each account (or current account if not using organizations)
     for account in accounts:
         account_id = account['Id']
@@ -216,7 +218,7 @@ if __name__ == "__main__":
         file_stats['account'][account_id]        = {'size':0, 'files':0, 'size.ext':{}, 'files.ext':{}}
         file_stats['account.bucket'][account_id] = {}
 
-        oprint("Account: "+account_id)
+        oprint("Account: " + account_id)
 
         # If account_id is our own, then we didn't (was not asked to do so) or couldn't enumerate the organizationa for assumed roles
         if account_id == my_id:
@@ -233,6 +235,7 @@ if __name__ == "__main__":
 
             # If we didn't get an assumed role object back, move on
             if not assumed_role:
+                oprint(" - couldn't assume role for this account")
                 continue
 
             # Obtain the credentials from the assumed role object
@@ -241,6 +244,11 @@ if __name__ == "__main__":
             # Active S3 client with credentials
             s3 = boto3.client('s3',aws_access_key_id=credentials['AccessKeyId'],aws_secret_access_key=credentials['SecretAccessKey'],\
                                    aws_session_token=credentials['SessionToken'])
+
+        if options.test:
+            buckets = list_buckets(s3)
+            oprint(" - total buckets: " + str(len(buckets)))
+            continue
 
         # Iterate over each bucket in the account S3
         for bucket in list_buckets(s3):
