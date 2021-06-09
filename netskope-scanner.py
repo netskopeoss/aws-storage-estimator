@@ -34,6 +34,9 @@ def list_accounts_in_org(organizations):
         for account in response['Accounts']:
             account_list.append(account)
 
+        if 'NextToken' not in response:
+            break
+
     return account_list
 
 
