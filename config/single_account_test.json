@@ -1,3 +1,4 @@
 {
-   "test":true
+   "test":true,
+   "write":"output.json"
 }
