@@ -166,6 +166,10 @@ def get_options():
     parser.add_argument("--include", "-i", help="List of accounts included in scan", metavar='ACCOUNTID', type=str, nargs='+', default=[], required=False)
     parser.add_argument("--exclude", "-e", help="List of accounts excluded from scan", metavar='ACCOUNTID', type=str, nargs='+', default=[], required=False)
 
+    if len(sys.argv) < 2:
+        parser.print_usage()
+        sys.exit(1)
+
     args = parser.parse_args()
 
     # If we were provided a json config file, then start baseline arguments and override with file options
@@ -187,11 +191,12 @@ def oprint(data='', **kwargs):
 
 if __name__ == "__main__":
 
+
     file_stats    = {'errors':[], 'total':{'size':0, 'files':0, 'size.ext':{}, 'files.ext':{}}, 'account':{}, 'account.bucket':{}}
     options       = get_options()
     sts           = boto3.client('sts')
     organizations = boto3.client('organizations')
-    
+
     try:
         my_id = sts.get_caller_identity().get('Account')
     except botocore.exceptions.ClientError as error:
