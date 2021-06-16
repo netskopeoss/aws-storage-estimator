@@ -1,15 +1,19 @@
 # aws-s3-scanner
 
 ```
-usage: netskope-scanner.py [-h] [--config FILE] [--write FILE] [--test] [--org] [--maxsize BYTES] [--minsize BYTES] [--allowext EXT [EXT ...]] [--blockext EXT [EXT ...]]
+usage: netskope-scanner.py [-h] [--quiet] [--debug] [--config FILE] [--write FILE] [--summary] [--test] [--org]
+                           [--maxsize BYTES] [--minsize BYTES] [--allowext EXT [EXT ...]] [--blockext EXT [EXT ...]]
                            [--include ACCOUNTID [ACCOUNTID ...]] [--exclude ACCOUNTID [ACCOUNTID ...]]
 
 optional arguments:
   -h, --help            show this help message and exit
+  --quiet, -q           Suppress all output
+  --debug, -d           Enable debugging mode
   --config FILE, -c FILE
                         Configuration JSON file with script options
   --write FILE, -w FILE
                         Output JSON file to write with results
+  --summary, -s         Get summary of accounts and buckets
   --test, -t            Do not iteratively scan buckets for testing
   --org, -o             Scan for accounts in the organization
   --maxsize BYTES, -x BYTES
@@ -24,6 +28,7 @@ optional arguments:
                         List of accounts included in scan
   --exclude ACCOUNTID [ACCOUNTID ...], -e ACCOUNTID [ACCOUNTID ...]
                         List of accounts excluded from scan
+
 ```
 
 ## Installing
