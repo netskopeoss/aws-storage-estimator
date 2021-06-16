@@ -156,6 +156,7 @@ def get_options():
     parser.add_argument("--debug", "-d", help="Enable debugging mode", action='store_true', default=False, required=False)
     parser.add_argument("--config", "-c", help="Configuration JSON file with script options", metavar='FILE', type=str, required=False)
     parser.add_argument("--write", "-w", help="Output JSON file to write with results", metavar='FILE', type=str, required=False)
+    parser.add_argument("--summary", "-s", help="Get summary of accounts and buckets", action='store_true', default=False, required=False)
     parser.add_argument("--test", "-t", help="Do not iteratively scan buckets for testing", action='store_true', default=False, required=False)
     parser.add_argument("--org", "-o", help="Scan for accounts in the organization", action='store_true', default=False, required=False)
     parser.add_argument("--maxsize", "-x", help="Maximum size file allowed in scan", metavar='BYTES', type=int, default=33554432, required=False)
@@ -245,7 +246,7 @@ if __name__ == "__main__":
             s3 = boto3.client('s3',aws_access_key_id=credentials['AccessKeyId'],aws_secret_access_key=credentials['SecretAccessKey'],\
                                    aws_session_token=credentials['SessionToken'])
 
-        if options.test:
+        if options.summary:
             buckets = list_buckets(s3)
             oprint(" - total buckets: " + str(len(buckets)))
             continue
@@ -263,8 +264,8 @@ if __name__ == "__main__":
 
     if options.write:
         with open(options.write,'w') as outfile:
-            json.dump(file_stats,outfile)
+            json.dump(file_stats,outfile,indent=4,sort_keys=True)
     else:
-        print(json.dumps(file_stats))
+        print(json.dumps(file_stats,indent=4,sort_keys=True))
 
 
