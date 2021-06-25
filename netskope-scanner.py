@@ -204,7 +204,7 @@ if __name__ == "__main__":
 
     accounts = list_accounts_in_org(organizations) if options.org else [{'Id':my_id}]
 
-    oprint(options)
+    #oprint(options)
 
     oprint("Accounts found: " + str(len(accounts)))
 
