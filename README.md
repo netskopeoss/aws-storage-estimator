@@ -1,9 +1,10 @@
 # aws-s3-scanner
 
 ```
-usage: netskope-scanner.py [-h] [--quiet] [--debug] [--config FILE] [--write FILE] [--summary] [--test] [--org]
-                           [--maxsize BYTES] [--minsize BYTES] [--allowext EXT [EXT ...]] [--blockext EXT [EXT ...]]
-                           [--include ACCOUNTID [ACCOUNTID ...]] [--exclude ACCOUNTID [ACCOUNTID ...]]
+usage: netskope-scanner.py [-h] [--quiet] [--debug] [--config FILE] [--json FILE] [--csv FILE] [--summary] [--test]
+                           [--org] [--maxsize BYTES] [--minsize BYTES] [--allowext EXT [EXT ...]]
+                           [--blockext EXT [EXT ...]] [--include ACCOUNTID [ACCOUNTID ...]]
+                           [--exclude ACCOUNTID [ACCOUNTID ...]]
 
 optional arguments:
   -h, --help            show this help message and exit
