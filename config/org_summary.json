@@ -1,5 +1,5 @@
 {
    "org":true,
    "summary":true,
-   "write":"output.json"
+   "json":"output.json"
 }

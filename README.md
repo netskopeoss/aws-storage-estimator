@@ -11,8 +11,8 @@ optional arguments:
   --debug, -d           Enable debugging mode
   --config FILE, -c FILE
                         Configuration JSON file with script options
-  --write FILE, -w FILE
-                        Output JSON file to write with results
+  --json FILE           Output JSON file to write with results
+  --csv FILE            Output CSV file to write with results
   --summary, -s         Get summary of accounts and buckets
   --test, -t            Do not iteratively scan buckets for testing
   --org, -o             Scan for accounts in the organization
@@ -60,7 +60,7 @@ overriden with --include or --exclude flags which take a list of account IDs eac
 In order to scan an entire organization, this script must run under the master account or 
 a delegated account that can access AssumeRole for the each accounts IAM role OrganizationAccountAccessRole.
 
-Output is in JSON format and sent to STDOUT by default.  To write a file use the --write /path/to/file.json option.
+Output can be specified for JSON or CSV format.  To write a file use the --json /path/to/file.json or --csv /path/to/file.csv option.
 
 This script will read a JSON configuration file of options, and several examples are in the config directory
 
