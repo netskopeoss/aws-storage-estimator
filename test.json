@@ -1,0 +1,535 @@
+{
+    "account": {
+        "466336652445": {
+            "files": 4907,
+            "files.ext": {
+                "": 1136,
+                "adoc": 272,
+                "css": 6,
+                "csv": 2,
+                "doc": 1,
+                "dockerfile": 3,
+                "docx": 1,
+                "exe": 1,
+                "gz": 2998,
+                "html": 6,
+                "idx": 6,
+                "jpeg": 4,
+                "json": 69,
+                "log": 9,
+                "md": 13,
+                "metadata": 1,
+                "pac": 3,
+                "pack": 6,
+                "pem": 30,
+                "png": 53,
+                "py": 20,
+                "sample": 78,
+                "sh": 56,
+                "svg": 6,
+                "template": 6,
+                "txt": 25,
+                "xlsx": 3,
+                "yaml": 33,
+                "yml": 58,
+                "zip": 2
+            },
+            "size": 43568783,
+            "size.ext": {
+                "": 6122409,
+                "adoc": 437930,
+                "css": 252525,
+                "csv": 53421,
+                "doc": 82944,
+                "dockerfile": 2790,
+                "docx": 46207,
+                "exe": 2516264,
+                "gz": 11962137,
+                "html": 295212,
+                "idx": 311632,
+                "jpeg": 910690,
+                "json": 216931,
+                "log": 6068841,
+                "md": 19321,
+                "metadata": 2564,
+                "pac": 35328,
+                "pack": 6138615,
+                "pem": 52030,
+                "png": 6519228,
+                "py": 44697,
+                "sample": 140652,
+                "sh": 48300,
+                "svg": 17688,
+                "template": 426784,
+                "txt": 72479,
+                "xlsx": 40585,
+                "yaml": 615498,
+                "yml": 90940,
+                "zip": 24141
+            }
+        }
+    },
+    "account.bucket": {
+        "466336652445": {
+            "aws-athena-query-results-466336652445-us-west-2": {
+                "files": 3,
+                "files.ext": {
+                    "csv": 1,
+                    "metadata": 1,
+                    "txt": 1
+                },
+                "size": 15376,
+                "size.ext": {
+                    "csv": 12736,
+                    "metadata": 2564,
+                    "txt": 76
+                }
+            },
+            "barclays-publisher": {
+                "files": 1,
+                "files.ext": {
+                    "": 1
+                },
+                "size": 4902352,
+                "size.ext": {
+                    "": 4902352
+                }
+            },
+            "cf-templates-8jmp0f9v7k06-eu-west-1": {
+                "files": 1,
+                "files.ext": {
+                    "yaml": 1
+                },
+                "size": 17861,
+                "size.ext": {
+                    "yaml": 17861
+                }
+            },
+            "cf-templates-8jmp0f9v7k06-us-east-1": {
+                "files": 32,
+                "files.ext": {
+                    "": 15,
+                    "csv": 1,
+                    "json": 5,
+                    "template": 1,
+                    "yaml": 9,
+                    "yml": 1
+                },
+                "size": 399993,
+                "size.ext": {
+                    "": 230402,
+                    "csv": 40685,
+                    "json": 58235,
+                    "template": 10108,
+                    "yaml": 56990,
+                    "yml": 3573
+                }
+            },
+            "cf-templates-8jmp0f9v7k06-us-east-2": {
+                "files": 2,
+                "files.ext": {
+                    "yml": 2
+                },
+                "size": 6347,
+                "size.ext": {
+                    "yml": 6347
+                }
+            },
+            "cf-templates-8jmp0f9v7k06-us-west-1": {
+                "files": 8,
+                "files.ext": {
+                    "json": 8
+                },
+                "size": 72830,
+                "size.ext": {
+                    "json": 72830
+                }
+            },
+            "cf-templates-8jmp0f9v7k06-us-west-2": {
+                "files": 7,
+                "files.ext": {
+                    "yml": 7
+                },
+                "size": 18129,
+                "size.ext": {
+                    "yml": 18129
+                }
+            },
+            "config-bucket-466336652445": {
+                "files": 999,
+                "files.ext": {
+                    "gz": 999
+                },
+                "size": 9952221,
+                "size.ext": {
+                    "gz": 9952221
+                }
+            },
+            "csa-test-bucket-1": {
+                "files": 0,
+                "files.ext": {},
+                "size": 0,
+                "size.ext": {}
+            },
+            "dg-temp": {
+                "files": 0,
+                "files.ext": {},
+                "size": 0,
+                "size.ext": {}
+            },
+            "elasticbeanstalk-us-east-1-466336652445": {
+                "files": 0,
+                "files.ext": {},
+                "size": 0,
+                "size.ext": {}
+            },
+            "frosa-backup": {
+                "files": 10,
+                "files.ext": {
+                    "doc": 1,
+                    "docx": 1,
+                    "jpeg": 4,
+                    "png": 1,
+                    "xlsx": 3
+                },
+                "size": 1589876,
+                "size.ext": {
+                    "doc": 82944,
+                    "docx": 46207,
+                    "jpeg": 910690,
+                    "png": 509450,
+                    "xlsx": 40585
+                }
+            },
+            "mk-aws-test-cf": {
+                "files": 1000,
+                "files.ext": {
+                    "gz": 1000
+                },
+                "size": 1291585,
+                "size.ext": {
+                    "gz": 1291585
+                }
+            },
+            "netskopedemocis": {
+                "files": 999,
+                "files.ext": {
+                    "gz": 999
+                },
+                "size": 718331,
+                "size.ext": {
+                    "gz": 718331
+                }
+            },
+            "netskopeproddemo": {
+                "files": 1,
+                "files.ext": {
+                    "txt": 1
+                },
+                "size": 185,
+                "size.ext": {
+                    "txt": 185
+                }
+            },
+            "netskopesacostbucket": {
+                "files": 0,
+                "files.ext": {},
+                "size": 0,
+                "size.ext": {}
+            },
+            "netskopesedemo": {
+                "files": 4,
+                "files.ext": {
+                    "exe": 1,
+                    "pac": 3
+                },
+                "size": 2551592,
+                "size.ext": {
+                    "exe": 2516264,
+                    "pac": 35328
+                }
+            },
+            "netskopesedemotools": {
+                "files": 999,
+                "files.ext": {
+                    "": 998,
+                    "zip": 1
+                },
+                "size": 817252,
+                "size.ext": {
+                    "": 805820,
+                    "zip": 11432
+                }
+            },
+            "netskopetools": {
+                "files": 0,
+                "files.ext": {},
+                "size": 0,
+                "size.ext": {}
+            },
+            "node-sdk-sample-4cb1cc86-4e42-4262-90e7-ca2611a929fa": {
+                "files": 1,
+                "files.ext": {
+                    "txt": 1
+                },
+                "size": 12,
+                "size.ext": {
+                    "txt": 12
+                }
+            },
+            "node-sdk-sample-506b52e1-44b8-4a41-a238-9c8259971b78": {
+                "files": 1,
+                "files.ext": {
+                    "txt": 1
+                },
+                "size": 12,
+                "size.ext": {
+                    "txt": 12
+                }
+            },
+            "node-sdk-sample-5d3d88a1-bce6-4af9-b0a8-50c93d4fd9fb": {
+                "files": 1,
+                "files.ext": {
+                    "txt": 1
+                },
+                "size": 12,
+                "size.ext": {
+                    "txt": 12
+                }
+            },
+            "node-sdk-sample-fed3fdc1-cdd2-4762-9b27-1018054ff488": {
+                "files": 0,
+                "files.ext": {},
+                "size": 0,
+                "size.ext": {}
+            },
+            "nsautoremediation": {
+                "files": 1,
+                "files.ext": {
+                    "zip": 1
+                },
+                "size": 12709,
+                "size.ext": {
+                    "zip": 12709
+                }
+            },
+            "nsbpaemails": {
+                "files": 3,
+                "files.ext": {
+                    "pem": 1,
+                    "png": 2
+                },
+                "size": 47884,
+                "size.ext": {
+                    "pem": 3452,
+                    "png": 44432
+                }
+            },
+            "nsezlab": {
+                "files": 29,
+                "files.ext": {
+                    "pem": 29
+                },
+                "size": 48578,
+                "size.ext": {
+                    "pem": 48578
+                }
+            },
+            "nseztunnel": {
+                "files": 0,
+                "files.ext": {},
+                "size": 0,
+                "size.ext": {}
+            },
+            "nstxnlogs": {
+                "files": 9,
+                "files.ext": {
+                    "log": 9
+                },
+                "size": 6068841,
+                "size.ext": {
+                    "log": 6068841
+                }
+            },
+            "oplplogsfiles": {
+                "files": 0,
+                "files.ext": {},
+                "size": 0,
+                "size.ext": {}
+            },
+            "s3tempmk": {
+                "files": 0,
+                "files.ext": {},
+                "size": 0,
+                "size.ext": {}
+            },
+            "vgse2020cft": {
+                "files": 1,
+                "files.ext": {
+                    "yaml": 1
+                },
+                "size": 8727,
+                "size.ext": {
+                    "yaml": 8727
+                }
+            },
+            "yaroslav-netskope": {
+                "files": 0,
+                "files.ext": {},
+                "size": 0,
+                "size.ext": {}
+            },
+            "yduchovny-bitbucket": {
+                "files": 303,
+                "files.ext": {
+                    "": 29,
+                    "adoc": 125,
+                    "css": 3,
+                    "dockerfile": 1,
+                    "html": 2,
+                    "json": 26,
+                    "md": 7,
+                    "png": 22,
+                    "py": 10,
+                    "sh": 28,
+                    "svg": 3,
+                    "template": 3,
+                    "txt": 10,
+                    "yaml": 12,
+                    "yml": 22
+                },
+                "size": 4012811,
+                "size.ext": {
+                    "": 75752,
+                    "adoc": 189344,
+                    "css": 125753,
+                    "dockerfile": 930,
+                    "html": 73488,
+                    "json": 42519,
+                    "md": 9148,
+                    "png": 2786289,
+                    "py": 21604,
+                    "sh": 19182,
+                    "svg": 8844,
+                    "template": 277390,
+                    "txt": 36083,
+                    "yaml": 310850,
+                    "yml": 35635
+                }
+            },
+            "yduchovny-bitbucket-org": {
+                "files": 492,
+                "files.ext": {
+                    "": 93,
+                    "adoc": 147,
+                    "css": 3,
+                    "dockerfile": 2,
+                    "html": 4,
+                    "idx": 6,
+                    "json": 30,
+                    "md": 6,
+                    "pack": 6,
+                    "png": 28,
+                    "py": 10,
+                    "sample": 78,
+                    "sh": 28,
+                    "svg": 3,
+                    "template": 2,
+                    "txt": 10,
+                    "yaml": 10,
+                    "yml": 26
+                },
+                "size": 11015267,
+                "size.ext": {
+                    "": 108083,
+                    "adoc": 248586,
+                    "css": 126772,
+                    "dockerfile": 1860,
+                    "html": 221724,
+                    "idx": 311632,
+                    "json": 43347,
+                    "md": 10173,
+                    "pack": 6138615,
+                    "png": 3179057,
+                    "py": 23093,
+                    "sample": 140652,
+                    "sh": 29118,
+                    "svg": 8844,
+                    "template": 139286,
+                    "txt": 36099,
+                    "yaml": 221070,
+                    "yml": 27256
+                }
+            }
+        }
+    },
+    "errors": [],
+    "total": {
+        "files": 4907,
+        "files.ext": {
+            "": 1136,
+            "adoc": 272,
+            "css": 6,
+            "csv": 2,
+            "doc": 1,
+            "dockerfile": 3,
+            "docx": 1,
+            "exe": 1,
+            "gz": 2998,
+            "html": 6,
+            "idx": 6,
+            "jpeg": 4,
+            "json": 69,
+            "log": 9,
+            "md": 13,
+            "metadata": 1,
+            "pac": 3,
+            "pack": 6,
+            "pem": 30,
+            "png": 53,
+            "py": 20,
+            "sample": 78,
+            "sh": 56,
+            "svg": 6,
+            "template": 6,
+            "txt": 25,
+            "xlsx": 3,
+            "yaml": 33,
+            "yml": 58,
+            "zip": 2
+        },
+        "size": 43568783,
+        "size.ext": {
+            "": 6122409,
+            "adoc": 437930,
+            "css": 252525,
+            "csv": 53421,
+            "doc": 82944,
+            "dockerfile": 2790,
+            "docx": 46207,
+            "exe": 2516264,
+            "gz": 11962137,
+            "html": 295212,
+            "idx": 311632,
+            "jpeg": 910690,
+            "json": 216931,
+            "log": 6068841,
+            "md": 19321,
+            "metadata": 2564,
+            "pac": 35328,
+            "pack": 6138615,
+            "pem": 52030,
+            "png": 6519228,
+            "py": 44697,
+            "sample": 140652,
+            "sh": 48300,
+            "svg": 17688,
+            "template": 426784,
+            "txt": 72479,
+            "xlsx": 40585,
+            "yaml": 615498,
+            "yml": 90940,
+            "zip": 24141
+        }
+    }
+}
