@@ -1,10 +1,10 @@
-# aws-s3-scanner
+# aws-storage-estimator
 
 ```
-usage: netskope-scanner.py [-h] [--quiet] [--debug] [--config FILE] [--json FILE] [--csv FILE] [--summary] [--test]
-                           [--org] [--maxsize BYTES] [--minsize BYTES] [--allowext EXT [EXT ...]]
-                           [--blockext EXT [EXT ...]] [--include ACCOUNTID [ACCOUNTID ...]]
-                           [--exclude ACCOUNTID [ACCOUNTID ...]]
+usage: aws-storage-estimator.py [-h] [--quiet] [--debug] [--config FILE] [--json FILE] [--csv FILE] [--summary] [--test]
+                                [--org] [--maxsize BYTES] [--minsize BYTES] [--allowext EXT [EXT ...]]
+                                [--blockext EXT [EXT ...]] [--include ACCOUNTID [ACCOUNTID ...]]
+                                [--exclude ACCOUNTID [ACCOUNTID ...]]
 
 optional arguments:
   -h, --help            show this help message and exit
