@@ -17,6 +17,7 @@ optional arguments:
   --summary, -s         Summary only of accounts and buckets, does not enumerate bucket contents
   --test, -t            Do not iteratively scan buckets for testing
   --org, -o             Scan for accounts in the organization
+  --role, -r            Role to use for AssumeRole, defaults to OrganizationAccountAccessRole
   --maxsize BYTES, -x BYTES
                         Maximum size file allowed in scan
   --minsize BYTES, -n BYTES
