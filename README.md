@@ -14,7 +14,7 @@ optional arguments:
                         Configuration JSON file with script options
   --json FILE           Output JSON file to write with results
   --csv FILE            Output CSV file to write with results
-  --summary, -s         Get summary of accounts and buckets
+  --summary, -s         Summary only of accounts and buckets, does not enumerate bucket contents
   --test, -t            Do not iteratively scan buckets for testing
   --org, -o             Scan for accounts in the organization
   --maxsize BYTES, -x BYTES
