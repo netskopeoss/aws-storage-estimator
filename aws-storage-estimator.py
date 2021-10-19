@@ -158,9 +158,10 @@ def get_options():
 	parser.add_argument("--config", "-c", help="Configuration JSON file with script options", metavar='FILE', type=str, required=False)
 	parser.add_argument("--json", help="Output JSON file to write with results", metavar='FILE', type=str, required=False)
 	parser.add_argument("--csv", help="Output CSV file to write with results", metavar='FILE', type=str, required=False)
-	parser.add_argument("--summary", "-s", help="Get summary of accounts and buckets", action='store_true', default=False, required=False)
+	parser.add_argument("--summary", "-s", help="Summary only of accounts and buckets, does not enumerate bucket contents", action='store_true', default=False, required=False)
 	parser.add_argument("--test", "-t", help="Do not iteratively scan buckets for testing", action='store_true', default=False, required=False)
 	parser.add_argument("--org", "-o", help="Scan for accounts in the organization", action='store_true', default=False, required=False)
+	parser.add_argument("--role", "-r", help="Role to use for AssumeRole, defaults to OrganizationAccountAccessRole", metavar='ASSUME_ROLE', type=str, default="OrganizationAccountAccessRole", required=False)
 	parser.add_argument("--maxsize", "-x", help="Maximum size file allowed in scan", metavar='BYTES', type=int, default=33554432, required=False)
 	parser.add_argument("--minsize", "-n", help="Minimum size file allowed in scan", metavar='BYTES', type=int, default=1, required=False)
 	parser.add_argument("--allowext", "-a", help="List of extensions allowed in scan", metavar='EXT', type=str, nargs='+', default=[], required=False)
@@ -221,6 +222,9 @@ if __name__ == "__main__":
 	sts           = boto3.client('sts')
 	organizations = boto3.client('organizations')
 
+	if not options.json or not options.csv:
+		options.json = 'output.json'
+
 	try:
 		my_id = sts.get_caller_identity().get('Account')
 	except botocore.exceptions.ClientError as error:
@@ -258,9 +262,9 @@ if __name__ == "__main__":
 
 			# Attempt to assume role to obtain credentials for account requested
 			try:
-				assumed_role = sts.assume_role(RoleArn="arn:aws:iam::"+account_id+":role/OrganizationAccountAccessRole",RoleSessionName="NetskopeScan")
+				assumed_role = sts.assume_role(RoleArn="arn:aws:iam::"+account_id+":role/"+options.role,RoleSessionName="NetskopeScan")
 			except botocore.exceptions.ClientError as error:
-				file_stats['error'].append("Couldn't assume role for account "+account_id+" ("+str(error)+")")
+				file_stats['errors'].append("Couldn't assume role for account "+account_id+" ("+str(error)+")")
 				pass
 
 			# If we didn't get an assumed role object back, move on
