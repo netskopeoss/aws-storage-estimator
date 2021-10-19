@@ -260,7 +260,7 @@ if __name__ == "__main__":
 			try:
 				assumed_role = sts.assume_role(RoleArn="arn:aws:iam::"+account_id+":role/OrganizationAccountAccessRole",RoleSessionName="NetskopeScan")
 			except botocore.exceptions.ClientError as error:
-				file_stats['error'].append("Couldn't assume role for account "+account_id+" ("+str(error)+")")
+				file_stats['errors'].append("Couldn't assume role for account "+account_id+" ("+str(error)+")")
 				pass
 
 			# If we didn't get an assumed role object back, move on
