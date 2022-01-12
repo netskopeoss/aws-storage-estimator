@@ -2,4 +2,3 @@ boto3
 botocore
 pathlib
 argparse
-csv
