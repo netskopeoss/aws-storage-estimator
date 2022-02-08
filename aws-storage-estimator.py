@@ -168,6 +168,7 @@ def get_options():
 	parser.add_argument("--blockext", "-b", help="List of extensions excluded from scan", metavar='EXT', type=str, nargs='+', default=[], required=False)
 	parser.add_argument("--include", "-i", help="List of accounts included in scan", metavar='ACCOUNTID', type=str, nargs='+', default=[], required=False)
 	parser.add_argument("--exclude", "-e", help="List of accounts excluded from scan", metavar='ACCOUNTID', type=str, nargs='+', default=[], required=False)
+	parser.add_argument("--profiles", "-p", help="List of credential profiles to use", metavar='PROFILE', type=str, nargs='+', default=[], required=False)
 
 	if len(sys.argv) < 2:
 		parser.print_usage()
@@ -209,30 +210,26 @@ def ocsv(data):
 					row['bytes_'+file_ext] = 0
 			csv.append(row)
 	return csv
-	
 
-
-# MAIN #==============================================================
-
-if __name__ == "__main__":
-
-
-	file_stats    = {'errors':[], 'total':{'size':0, 'files':0, 'size.ext':{}, 'files.ext':{}}, 'account':{}, 'account.bucket':{}}
-	options       = get_options()
-	sts           = boto3.client('sts')
-	organizations = boto3.client('organizations')
-
-	if not options.json or not options.csv:
-		options.json = 'output.json'
+def scan_s3_buckets(options, session):
+	sts           = session.client('sts')
+	organizations = session.client('organizations')
 
 	try:
 		my_id = sts.get_caller_identity().get('Account')
 	except botocore.exceptions.ClientError as error:
 		raise error
 
-	accounts = list_accounts_in_org(organizations) if options.org else [{'Id':my_id}]
+	# Append the account id to the default output filename to allow iterating over multiple accounts
+	if not options.json and not options.csv:
+		outputjson = 'output-' + my_id + '.json'
+		oprint("Output: " + outputjson)
+	
+	if options.json:
+		outputjson = options.json
+		oprint("Output: " + outputjson)
 
-	#oprint(options)
+	accounts = list_accounts_in_org(organizations) if options.org else [{'Id':my_id}]
 
 	oprint("Accounts found: " + str(len(accounts)))
 
@@ -256,7 +253,7 @@ if __name__ == "__main__":
 
 		# If account_id is our own, then we didn't (was not asked to do so) or couldn't enumerate the organizationa for assumed roles
 		if account_id == my_id:
-			s3 = boto3.client('s3')
+			s3 = session.client('s3')
 		else:
 			assumed_role = None
 
@@ -295,8 +292,8 @@ if __name__ == "__main__":
 			list_objects_in_bucket(s3,account_id,bucket_name,options)
 			oprint()
 
-	if options.json:
-		with open(options.json,'w') as outfile:
+	if outputjson:
+		with open(outputjson,'w') as outfile:
 			json.dump(file_stats,outfile,indent=4,sort_keys=True)
 
 	if options.csv:
@@ -308,4 +305,20 @@ if __name__ == "__main__":
 				for row in csv_data:
 					writer.writerow(row)
 
+# MAIN #==============================================================
+
+if __name__ == "__main__":
+
+	file_stats    = {'errors':[], 'total':{'size':0, 'files':0, 'size.ext':{}, 'files.ext':{}}, 'account':{}, 'account.bucket':{}}
+	options       = get_options()
+
+	# if profiles names are specified, iterate over the list instead of using default profiles
+	if options.profiles:
+		for profile in options.profiles:
+			oprint("Profile: " + profile)
+			session = boto3.Session(profile_name=profile)
+			scan_s3_buckets(options, session)
+	else:
+		session = boto3.Session()
+		scan_s3_buckets(options, session)
 
